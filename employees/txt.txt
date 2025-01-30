@@ -1,0 +1,187 @@
+// Employee კლასი
+abstract class Employee {
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private int age;
+
+    // პარამეტრებიანი კონსტრუქტორი
+    public Employee(String firstName, String lastName, String gender, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.age = age;
+    }
+
+    // Getter მეთოდები
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    // აბსტრაქტული calculateSalary() მეთოდი
+    public abstract double calculateSalary();
+
+    // toString() მეთოდი
+    @Override
+    public String toString() {
+        return "Employee: " + firstName + " " + lastName + ", Gender: " + gender + ", Age: " + age;
+    }
+}
+
+// Manager კლასი (შვილობილი Employee კლასისგან)
+class Manager extends Employee {
+    private double baseSalary;
+    private double bonus;
+
+    // პარამეტრებიანი კონსტრუქტორი
+    public Manager(String firstName, String lastName, String gender, int age, double baseSalary, double bonus) {
+        super(firstName, lastName, gender, age);
+        this.baseSalary = baseSalary;
+        this.bonus = bonus;
+    }
+
+    // Getter მეთოდები
+    public double getBaseSalary() {
+        return baseSalary;
+    }
+
+    public double getBonus() {
+        return bonus;
+    }
+
+    // calculateSalary() მეთოდი
+    @Override
+    public double calculateSalary() {
+        return baseSalary + bonus;
+    }
+
+    // toString() მეთოდი
+    @Override
+    public String toString() {
+        return super.toString() + ", Base Salary: " + baseSalary + ", Bonus: " + bonus;
+    }
+}
+
+// Developer კლასი (შვილობილი Employee კლასისგან)
+class Developer extends Employee {
+    private double baseSalary;
+    private double overtimeRate;
+    private int overtimeHours;
+
+    // პარამეტრებიანი კონსტრუქტორი
+    public Developer(String firstName, String lastName, String gender, int age, double baseSalary, double overtimeRate, int overtimeHours) {
+        super(firstName, lastName, gender, age);
+        this.baseSalary = baseSalary;
+        this.overtimeRate = overtimeRate;
+        this.overtimeHours = overtimeHours;
+    }
+
+    // Getter მეთოდები
+    public double getBaseSalary() {
+        return baseSalary;
+    }
+
+    public double getOvertimeRate() {
+        return overtimeRate;
+    }
+
+    public int getOvertimeHours() {
+        return overtimeHours;
+    }
+
+    // calculateSalary() მეთოდი
+    @Override
+    public double calculateSalary() {
+        return baseSalary + (overtimeRate * overtimeHours);
+    }
+
+    // toString() მეთოდი
+    @Override
+    public String toString() {
+        return super.toString() + ", Base Salary: " + baseSalary + ", Overtime Rate: " + overtimeRate + ", Overtime Hours: " + overtimeHours;
+    }
+}
+
+// Vehicle ინტერფეისი
+interface Vehicle {
+    void startEngine();
+    void stopEngine();
+    String describePackage();
+}
+
+// VehicleImpl კლასი
+abstract class VehicleImpl implements Vehicle {
+    @Override
+    public void startEngine() {
+        System.out.println("Engine started");
+    }
+
+    @Override
+    public void stopEngine() {
+        System.out.println("Engine stopped");
+    }
+
+    // abstract method describePackage()
+    public abstract String describePackage();
+}
+
+// BMW კლასი
+class BMW extends VehicleImpl {
+    @Override
+    public String describePackage() {
+        return "This is M pack";
+    }
+}
+
+// Mercedes კლასი
+class Mercedes extends VehicleImpl {
+    @Override
+    public String describePackage() {
+        return "This is AMG pack";
+    }
+}
+
+// Audi კლასი
+class Audi extends VehicleImpl {
+    @Override
+    public String describePackage() {
+        return "This is S line";
+    }
+}
+
+// მთავარი კლასი
+public class Main {
+    public static void main(String[] args) {
+        // Manager და Developer კლასის ობიექტები
+        Manager manager = new Manager("John", "Doe", "Male", 35, 5000, 1000);
+        Developer developer = new Developer("Alice", "Smith", "Female", 28, 4000, 50, 20);
+
+        // გამოსასვლელი
+        System.out.println(manager.toString());
+        System.out.println("Manager Salary: " + manager.calculateSalary());
+
+        System.out.println(developer.toString());
+        System.out.println("Developer Salary: " + developer.calculateSalary());
+
+        // Vehicle კლასი და მისი გადაფარვები
+        Vehicle bmw = new BMW();
+        Vehicle mercedes = new Mercedes();
+        Vehicle audi = new Audi();
+
+        System.out.println(bmw.describePackage());
+        System.out.println(mercedes.describePackage());
+        System.out.println(audi.describePackage());
+    }
+}
